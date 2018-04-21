@@ -11,3 +11,9 @@ npm cache clean
 
 href="/spade/projects/add
 
+$$ Install Bootstrap
+1 add cdn in index.html file
+2 npm install boot
+
+
+
