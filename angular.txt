@@ -17,4 +17,34 @@ $$ Install Bootstrap
 then in .angular-cli.json  in style add "../node-modules/dist/css/bootstrap.min.css"
 
 
+ng g c componentName
 
+component html :---template: '<selectorname></selectorname>'
+  `any html
+ <p></p>
+   `
+
+component css----
+styles:[`h3{color:red}`] or styleUrls:['path']
+
+Selector :-  1 element style "selName"  2 attribute style '[selName]' then in html <div selName></div>  3. by class '.selName' then in html <div class="selName"> </div> 
+note  by id selectore is not supported by angular
+
+
+$$ DATABINDING
+1 String interpolation --- name = "Sharad";  in html {{name}} one way binding  {{getString()}}
+2 property binding   bool:boolean = false;  <button [disabled]="bool">ok</button> <div [innerText]="bool"></div>
+3 event binding <p>{{status}}</p>  (click)="methodName()" we can write code directly here if code is small 
+note=== we can search property and event for a element on MDN  
+<input type="text"(input)="onEveryKepPress($event)"> 
+    $ always fetch event data and  pass data in the method  
+onEveryKepPress(event: Event){ console.log(event.target.value)}   or (<HTMLInputElement>event.target).value
+
+ and Angular provides a corresponding DOM event object in the $event variable which this code passes as a parameter to the component's onKey() method.
+
+The properties of an $event object vary depending on the type of DOM event. For example, a mouse event includes different information than a input box editing event.
+
+All standard DOM event objects have a target property, a reference to the element that raised the event. In this case, target refers to the <input> element and event.target.value returns the current contents of that element.
+
+
+4 Two way data binding
