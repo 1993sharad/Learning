@@ -47,4 +47,5 @@ The properties of an $event object vary depending on the type of DOM event. For 
 All standard DOM event objects have a target property, a reference to the element that raised the event. In this case, target refers to the <input> element and event.target.value returns the current contents of that element.
 
 
-4 Two way data binding
+4 Two way data binding event+property binding [(ngModel)]="name" it is directive
+for this we need to import FormModule coz this directive comes under it

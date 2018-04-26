@@ -1,0 +1,28 @@
+$$$ Directive :---- as attribute css or element style
+are instructions in dom. without html  
+*ngIf="showMe"--structural dir means will change structue of dom
+note--- we can pass anything in plase of showMe which returns true/false
+
+$$$   if/else
+<p *ngIf="showMe; else ok"></p>
+< ng-template #ok>
+<p></p>
+</ng-template>
+
+$$ dynamic style with ngStyle attribute directive
+
+<p [ngStyle]="{'background-color':'red'}" means we r binding some property on this diretive
+             ="{backgroundColor:'red' or getColor()}" 
+
+$$ dynamic style with ngClass directive
+
+<p [ngClass]="{cssClassName:anyVar or method,which return true or false}"
+
+
+$$ <p *ngFor="let x of arrayName let i = index "> ok</p>
+
+
+
+
+CHAPTER333333
+ 
