@@ -1,0 +1,78 @@
+nodejs- runtime env to run javascript code outside the browser
+npm is a tool to install third party lib
+
+npm install -g @angular/cli
+ng --version
+ng new pName  shift ctrl p
+
+in SRC folder
+
+e2e ---test end to end 
+node_modules --- all the third partu lib on which our application is depedent on
+assets -- asset like image icon 
+environments  - config for different env
+     environmet.prod.ts prod env
+
+favicon.ico    icon displayed in browser
+index.html  start application
+main.ts-- starting point of application
+polyfills.ts--  script to run the angular  feature of javascript which angular ned
+style.css -- global style for application
+
+
+.angular-cli.json--
+
+
+
+Typescript:-----
+
+npm install -g typescripttsc --version 
+tsc fileName.ts then in that folder u will get both .ts and .js file
+then node fileName.js
+ var--  available to nearst parent function
+
+
+enum Color {red,green,blue}
+let x  = Color.red;  => 0
+
+$$ Type Aserction --
+
+let x ="sharad"   x. then all the method will come related to string but if
+ let x;
+x = "" sharad  x.  then it wont come because x is type of any
+then   (<string>x).  now it will show all methods related to string  it is type asrction
+or (x as string).
+
+let showMe = (x)=>{console.log("hi")}
+
+
+if function is taking too much argu then always pass one obj
+
+inline annotation 
+let methodname = (obj: {x: number, y:number})=>{}
+  methodName({x:1,y:3})   or   use interphase
+
+interface Obj{
+x:number,
+y:number}
+so (obj: Obj)
+
+
+class Point{
+x:number;
+y:number;
+draw(){}
+
+}   
+let obj: Point = new Point();
+obj.draw();
+in ts we can make argu of constructor optional
+
+
+constructor(x?: number, y?: number)
+if we use private x?: then type script autometic declare and initialize by value no need to declare and initialize in constructor
+
+
+Module 
+
+
