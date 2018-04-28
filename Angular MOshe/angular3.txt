@@ -1,0 +1,67 @@
+ <span
+  class="glyphicon"
+  [class.glyphicon-star]="isFav"
+[class.glyphicon-star]="!isFav" 
+(click)="onClick()" >
+
+</span>
+
+
+isFav :boolean = false;
+onClick(){
+this.isFav = !this.isFav;
+}
+
+
+SECTION 5  pass data   raise custom events,  Apply Style , Shadow DOM , View encapsulation
+
+property binding - we bind property to DOM obj
+< img [src]="imgUrl"  we can say src property is ip to DOM obj
+
+parent to child data passing
+1 using @Input
+2 in @Component({inputs['isSelected']})
+NOTE-  <childCompoName [isSelected]="var">   var  is property of parent component
+
+@Input('is-Selected') isSelected then in html use [is-Selected]="var"
+@Output('')
+
+CSS VIMP  see VIEW Encapsulation video  
+
+
+NG_CONTENT  (Pass html(p h1, h2 etc) and data)
+ we can pass data between component using @Input
+but we can pass complete html element and its data using ng-content  element of angular 
+ex
+
+<div>  suppose this is html file and its selector name is Con
+
+<div> <ng-content select =".one"> </ng-content> </div>
+  we r giving class name because here we r uding two ng-content
+<div> <ng-content select =".two"> </ng-content> </div>
+
+</div>
+
+
+now we will use above selector in another html file like this
+<Con>
+
+<div class="one">hi sharad</div>
+<div class="two"> <h2>oo</h2> <p>sdsd</p>  </div>
+</Con>
+
+
+ngContainer-------
+
+in above situation angular internally replace
+in place of  <ng-content select =".one"> </ng-content>    it keep <div class="one">hi sharad</div>  completly   because of that class
+but if we want only   hi Sharad not the element n all then in place of  <div class="one">hi sharad</div>  use <ng-container class="one">hi sharad</div>
+then it will take only hi Sharad      we can see it by inspecting it 
+
+
+
+
+
+
+
+
