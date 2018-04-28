@@ -1,0 +1,111 @@
+   first download auto import for  importinh the things
+  ctrl + ` to open cmd in vsc
+ctrl b	
+
+@Injectable() deco- why
+if and only if this service has a dependency on its constructor 
+ex  constructor(logService: LogService) it means angular pls inject this dependency into its construstor
+
+NOTE- when we use @Component() deco then no need to use @Injectable coz it autometically add it internally
+
+internally  interpolation is converted to property binding 
+
+<h2 [textContent]="name"></h2>  then in such cases use interpolation
+ 1 . works always from compo to html
+ 2 .<td [colspan]="colSpan"></td>
+
+colSpan = 2;
+ then error --- can not bind to colspan since it is not known property of td 
+
+DOM --- is a model objects that represents the structure of document 
+it essentially a tree of objects in memory 
+
+HTML = =  markup language that we use to represent  DOM in text
+
+so when browser parse html document it create a objects in memory that we reffer to as a dom 
+
+NOTE--- most of the attribute of html element has a one to one mapping to property of DOM obj but few are exceptions  ex colspan 
+so when browser arse html doc and create actual dom obh for this <td > but dom obj doesnot have property colspan thats why we got error 
+
+
+so always remember whenever we r using property binding means we r binding property of dom obj not attribute of  html element 
+but in 90% cases we have one to one binding(html attribute to dom property )
+for 10% always use <td [attr.colspan]="anyName">
+
+DOM is the tree model to represent HTML.
+
+
+
+Add Bootstrap :----
+npm install bootstrap --save      "^3.3.7"  itmeans ma
+
+in styles.css
+
+@import "~bootstrap/dist/css/bootstrap.css"
+
+[class.active]="assign"
+
+DOM style properties search on google 
+
+[style.backgroundColor]="x?'blue':'white'"
+
+
+EVENT BUBBLING
+
+<div (click)="open()">
+
+<button (click)="me($event)">click me </button>    then first  me($event) will be called then   open () this is called event bubbling bottom to top
+
+</div>
+
+
+then how to stop this event propogation   use $event.stopPropagation()   in me($event) method   so this event will not bubble up or 
+
+
+EVENT Filtering 
+
+<input (keyup)="onKeyUp($event)">
+      [(ngModel)]="varName"
+
+onKeyUp(x){x.keyCode === 13} console.log("enter pressed")  but in angular    we can do like this (keyup.enter)="onKeyUp()"  this is event filtering then remove all arguments no need 
+
+
+Template Variable
+
+<input #f (keyup)="onKeyUp(f.value)">
+
+Two way Binding 
+
+Pipe----  to format data
+ Builtin pipes uppercase lowerCase Decimal Currency Percent date
+
+
+
+{{name | uppercase}}  we can supply argu in pipe this {{x | currency:'AUD'}}
+
+
+
+orderBy  and filter removed from angular2 onword  
+for more detail search in angular.io 
+
+Custom Piipe
+1 add file  summary.pipe.ts 
+import { Pipe, PipeTransform} from '@angular/core'
+
+export class SummaryPipe implements PipeTransform{
+
+@Pipe(
+{name:'summary'
+})
+transform(value: any, args?: any):any{
+if(!value)
+return null;
+any logic
+}
+
+}
+
+now resistor this pipe in app.module
+in declaration[SummaryPipe]                        in the html file {{name |summary:10}}
+
+NOTE --- we can add n no of parameters of any type 
