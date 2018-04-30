@@ -1,0 +1,6 @@
+ Directive   
+  ngFOr 
+
+Directive  
+1  Structural    modify the stru of DOM
+Attribue modify the attribute of DOM elements
