@@ -3,4 +3,92 @@
 
 Directive  
 1  Structural    modify the stru of DOM
-Attribue modify the attribute of DOM elements
+2 Attribue       modify the attribute of DOM elements
+
+<div *ngIf="courses.length>0; then coursesList else noCourses"></div>
+<ng-template #coursesList>
+List of Courses
+</ng-template>
+
+<ng-template #noCourses>
+No courses yet
+</ng-template>
+
+hidden attribute
+
+ngSwitch----
+
+<div [ngSwitch]="viewMode">
+
+<div *ngSwitchCase = "'map'">hi</div>
+<div *ngSwitchCase = "'list'">hello</div>
+<div *ngSwitchDefault> = "'map'">ok</div>
+
+</div>
+
+in ts file
+viewMode = "map"   [class.active]="true"
+
+*ngFor-   there are many in this Directive search it on angular.io
+
+*ngFor  Change Detection
+*ngFor and Trackby
+
+
+NOTEeee----
+
+<div *ngIf="var">hi sharad  </div>  is eqv to 
+
+<ng-template [ngIf]="var">
+<div>hi sharad </div>
+</ng-template>
+
+
+safe TRAVERSAL ex 
+
+task = { title :"ok",
+   assignee:{name:"sharad"}}
+
+in html  <span>{{task.assignee.name}</span>   if we keep name null then there will be error in console  then 
+2 solutions
+
+1 <span *ngIf="task.assignee">{{task.assignee.name}} </span>
+2   <span>{{task.assignee?.name}</span>
+
+
+
+Custom DIRECTIVE---- control the behave the dom element 
+without html
+
+
+ng g d input-format
+
+HostListener---- allows us to subscribe the events raised from DOM element who has this directive
+
+@Directive({
+selector: '[appInputFormat]'})   as a attribute 
+ export class InputFormatDirective{
+
+@HostListener('focus') onFocus(){ 
+onsole.log("focus")
+}
+
+@HostListener('blur') onBlur(){ 
+onsole.log("blur")
+}
+
+
+}
+
+
+
+<input type="text" appInputFormat>
+
+
+ElementRef----   is service defined in angular which gives access to dom obj
+
+inside constructor  private el :ElementRef
+
+
+Custom Directive---- read from Code Craft
+
