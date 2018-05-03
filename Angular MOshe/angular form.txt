@@ -1,0 +1,22 @@
+ in angulat there is a predefined class FormControl  and we just need to create its obj in our each input field
+then we can check its
+value 
+touched untouched 
+dirty 
+pristine
+valid
+error
+ using   that obj
+
+
+Simlar we have another class FormGroup class   which represents a group of control in a from 
+ above property r available here in FormGroup class also 
+requird html5 feature 	
+
+minlength="3" ,axlength="10"   pattern=""  any pattern which u want to be true 
+
+{{x | json}}
+
+
+[value] = "x.name"   generally we useto set value  but if we want complete obj then use 
+[ngValue] = "x"
