@@ -1,0 +1,94 @@
+
+add imports:[HttpModule]  in app.module.ts
+
+constructor(http:Http)  
+
+if we dont import HttpModule  then in console--  No provider for Http  coz here we have injected this calss but we have nt resistered this as a provider 
+
+tNOTE---   It means in angular   DI will not work unless we resistor all this dependency as provider
+
+then Solution 1-  in app.module.ts
+   providers:[Http]  since this class has other dependency then we need to provide all here  or
+    
+solution 2 : imports:[HttpModule]   this module  has all these things
+
+
+(keyup.enter)="ok()"
+
+
+Always use HTMLUnputElement     for #f  and when we pass it 
+
+
+
+(error: Response){    if use this Response then when we write error. then it will show all its method
+if(error.status === 404)
+console
+}
+
+
+GLOBAL ERROR HANDLING
+
+
+import 'rxjs/add/operator/catch';  
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
+then 
+
+
+at commomn  place create a class for error
+
+app-error.ts
+
+export class AppError{
+constructor(public originalError?:any){}
+
+}
+
+
+deletePost(){
+
+return this.http.delete(url).
+catch((error: Response)=>{
+ return Observable.throw(new AppError(error))   its mandatory   
+});
+}
+
+
+
+now FOR  A  PARTICULAR ERROR
+
+export class NotFoundError extends AppError{
+
+
+
+}
+
+
+deletePost(){
+
+return this.http.delete(url).
+catch((error: Response)=>{
+if(error.status === 404)
+ return Observable.throw(new NotFoundError());
+
+return Observable.throw(new AppError(error))      
+});
+}
+
+now  in class from where we r calling this service class methid delete()
+
+this.serviceName.delete()
+.subscribe(
+reponse={},
+
+(error:AppError)=>{
+if(errorinstanseof NotFoundError)
+alert();
+
+}
+
+);
+
+
+return this.http.delete(url).map(res=>res.json())
+.retry(3)

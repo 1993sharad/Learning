@@ -1,0 +1,115 @@
+ 
+Router Module:-
+
+config the routes 
+add a router outlet 
+add links 
+
+AS a atrribute <a routerLink="/followers">
+AS a property Binding [routerLink]="['/a/b/c', anyValuew(called route parameter)]"
+
+RouterLink Active    fix problem   means we use below dir  to apply css on selected route
+
+<li routerLinkActive ="active current"><a routerLink="/followers">
+
+
+
+
+GETTING ROUTE PARAMETER
+
+
+coonstru(private route: ActivatedRoute)
+
+path in app.module.ts    /anything/:username   but in html routerLink="/anything/1(id)"
+
+in ngonit   this.route.paramMap
+.subscrribe(params=>{
+consile.log(params)
+})
+   
+
+STRING TO NUMBER   Just add +before that string ex
+
+let x ="10";
+let y = +x;
+
+
+
+Why Route Parameter are Observable  
+
+OnInit  and OnDestroy
+
+
+
+this.route.snapshot.paramMap.get('username')     this username will be in path like /anything/:username
+
+
+Routes With Multiple Parameters
+
+[routerLink]="['/anyPath',any_var_or_id, 2nd value]" and path 'anyPath/:id/:userName'
+
+Query Parameters.
+
+<a routerLink="/anyPath"  [queryParams]="{page:1, order: maybe dynamic value also}"
+
+
+How to Recieve these in TS file
+
+
+inject private route: ActivatedRoute
+
+
+tjen in ngonint 
+
+this.route.paramMap
+.subscribe() 
+           
+             or  this.route.snapShot.paramMap.get('id')
+
+we should use here 
+this.route.queryParamMap.subscribe()  or   this.route.snapshot.queryparamMap.get('page')
+
+
+IF---
+
+this.route.paramMap
+.subscribe(params=>{
+})
+
+this.route.queryParamMap
+.subscribe(params=>{
+})                      here we r subscribing 2 observab;e which is not good then combime both into one
+
+then always do like this 
+
+Observable.combineLatest([
+this.route.paramMap, this.route.queryParamMap
+]).  subscribe(combined={
+       combined[0].get('id');
+        combined[1].get('page')
+})
+
+if here we make a api call n subscribe  like this
+
+this.service.getData({id:id,page:page}).
+subscribe(data=>{});
+
+this is not good because we r using 2 subscribe  then Solution
+
+
+SOLUTION----
+
+
+
+navigation  FROM TS FILE
+
+add depedency
+
+private router: Router
+
+
+on some condition 
+add this.router.navigate(['/anypath',1,2,3])
+   this.router.navigate(['/anypath',{
+        queryParams:{paage:1,order:'newest'}
+});

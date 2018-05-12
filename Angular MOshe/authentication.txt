@@ -1,0 +1,55 @@
+ https://jwt.io   base 64 algo decoder
+
+
+header  like {"alg": HS256, "type":JWT}    payload means  actual data   
+{"sub":"123454","name":"sharad","admin":true}
+
+3- Very Signature   to prevent our data from others       
+
+IN THE PROVIDER  app.module.ts
+
+AuthService
+
+
+FOR LOGIN
+
+signIn(credentials){
+this.authService.login(credentials)
+.subscribe(result=>{
+if(result)
+this.router.navigate(['anyPath']);
+else
+this.invalidLogin = true;      to show some logon error on screen 
+})
+
+}
+
+
+login(creentials){
+return this.http.post('url',JSON.stringify(credentials))
+.map(response=>{
+let result = response.json();
+if(result && result.token){
+localStorage.setItem('token',result.token);       javascript Function
+return true;
+}
+return false;
+
+})
+}
+
+
+
+
+GO TO APPLICATION TAB IN CHROME DEV TOOL
+
+then IN Local STORAGE  in left sight 
+
+
+logout(){
+localStroage.removeItem('token');
+}
+
+
+
+

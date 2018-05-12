@@ -1,0 +1,230 @@
+1  copy paste entire project in any server and do ng serve
+
+a  but problems   lots of file  like node_modules  too much heavy
+b   large  bundle  by npm install  vendor.bundor.js.map  too much heavy
+c  and  other bundles also 
+
+then  OPTIMIZATION TECHNIQUES
+
+1. Minification   will remove all the whitespace and comments
+2. Uglification   renaming long var to short n all 
+3.  Bundling   combinations of many js to one js file  
+4.  Dead code elimination   remove of code which is not used in project 
+5. Ahead of time ( AOT) compilation   pre compiling 
+
+NOTE----    we can use above all  using    ng build -prod  ()
+
+will prodice highly optimized bundle whic we can deploy on server 
+
+
+
+JIT  VS AOT Compilation 
+  Angular Comiler  take js code and produce js code
+
+  JIT  compilation that happen on run time  ex {{anyName}}
+  But  insufficient for production  for production 
+
+because we have to carry angular compiler in vendor.bundle  and other issues
+
+Solution--
+
+
+AOT----compilation beofre deploying our application 
+
+Faster Startup
+smaller bundle size
+catch template  error phle se hi coz we r compling it 
+Better security   coz we r compling heml and  component in js file before serviing to clint 
+
+
+
+
+package.json  in devDependencies   "@angular/compiler-cli":"^4.0.0" 
+
+node_modules/.bin/ngc   then u will see some files in yr project 
+if we do this then it can catch compile time error  ex   
+{{name}}   and if we do {{name1}}	 and complie it then compile time error  it will show
+
+
+But in real time we will do by angular CLI---------------
+
+to build for production---   ng  build --prod 
+
+ng build   without prod
+
+then we will get bundles  we will see dist folder in our app  where u will get all files
+
+open index.html  it is different slightly 
+u will get references to bundle
+
+
+for every bundelw u will have 2 file  one source file and another map file 
+
+here we dont have any optimization technique means u will lots of dead code
+
+
+
+
+NOW WITH PROD flag 
+ 
+ng build --prod   it will applu optimization tech
+ now copy simply this dist folder 
+
+
+
+
+DEv TEst  Prod  Env 
+
+in env  folder of our application  two file one env  for dev  and another prod for prod 
+
+we can have more property in enviroment  obj
+ex add
+
+color:'red'  in dev
+color:'green' in prod
+
+
+now in any component import that obj  and user that color 
+
+always import only enviroment
+NOTE--- ANGUlar autometic will take color depending upon enf  like prod or dev
+
+now  let color = enviroment.color;
+
+
+now ng serve --prod  or ng serve --environment=prod   
+bydefault its dev
+
+
+
+Adding Custom Env
+
+like testing
+
+1   duplicate any file in environment folderand change its name like
+
+env.test.ts
+ change property 
+production: false
+
+2  we need to  resister this env in .angular-cli.json
+{its config file for angular cli }
+
+
+here we have a property called 
+"enviroments":{
+"dev":"",
+"prod":"",
+"test":"environments/environment.test.ts"
+}
+
+
+now 
+ng serve --environment=test  or
+
+
+ng build --environment=test
+
+whenever we add new enf and we do changes in file then always stop and restart server to see new changes of environmnet 
+
+
+
+
+
+Linter -a pro that analysis pro like vilotion etc
+ex
+
+let x ="sharax"  some ppl write
+let y ='sharad'  some ppl write
+
+
+open package.json
+
+tslint: u will see
+
+
+tslint file-----   config all the rules
+ex   "quotemark":[true,"single"]  to disable this rule false  double
+
+now 
+ng lint 
+ then u will get all the error here 
+
+then to fix all autometic 
+
+ng lint -- fix 
+
+
+
+LINTING  IN VSC DIRECTLY   
+download TSLint  
+
+
+then in a partilcular file u will gwt all the error related to lint then to solve 
+
+u can solve one by one or 
+all   by pressing shift ctrl p  
+
+
+
+
+
+
+OTHER DEPLOYMENT OPTON
+
+GitGUb Pages    Firebase            Heroku
+No back-end      as the backend        custom back-end
+
+
+
+GitGUb Pages   Deploying
+
+
+1  open yr github account and creat e anew repo ex  gitPageExample
+2. copy git remote add origin http://github.com......./..git
+3. then in our project open VSC and simply paste it 
+4 git push origin master
+now our source code in in github
+6. npm install - g angular-cli-ghpages
+7.  ng build --prod --base-href="https://1993sharad.github.io/gitPageExample/"   ng build --prod --base-href="https://1993sharad.github.io/deployedProjects/"
+										ng build --prod --base-href "https://1993sharad.github.io/Deployment/"
+8-   angular-cli-ghpages  or ngh --no-silent
+                             						  	 git remote set-url https://1993sharad:Passw0rd@github.com/1993sharad/Deployment.git
+
+
+
+
+now go to see yr website
+
+url      https://username.github.io/reponame    https://1993sharad.github.io/depAppOne   git remote set-url https://<1993sharad>:<Passw0rd>@github.com/<1993sharad>/<deployedProjects>.git
+
+
+CONCLUSION----  
+
+ng build -prod -base-href=""
+
+ngh        
+
+
+
+go to package.json
+
+under script  add
+"deploy:gh":"ng build --prod --base-href='https://1993sharad.github.io/gitPageExample/' && sudo ngh"
+
+then npm run deploy:gh   only this
+
+
+
+
+NOTE__  ALWAYS USE THIS FOR ALL APP
+
+generally we use a specific version then always add this obj in package.json
+in the last
+
+,
+"engines":{
+"node":"",
+"npm":""
+}
+
