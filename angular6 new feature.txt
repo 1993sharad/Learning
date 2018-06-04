@@ -1,0 +1,51 @@
+RXjs 6   breaking change
+
+npm install --save rxjs-compat      if yr project using style of angular 5 rxjs and u r in angular6
+
+but if we want in angular 6 then 
+npm unistall --save rxjs-compat
+
+import {Observable} from "rxjs" ;   new style of importing rxjs
+
+and for operator
+
+import {map, catchError(catch in angular5) } from 'rxjs/operators';
+
+
+
+
+
+2---- CHANGE
+
+Deprecation Removals
+
+<template>  to   <ng-template>
+@angular/http     @angular/common/http
+
+
+import {HttpClient} from "@angular/common/http"
+
+3-----  different way to providing service in entire application
+
+insted of providing in 
+
+providers:[serviceName]
+
+NOTE---@Injectable   is needed in only service class when we are injecting something into that service class
+ 
+but in new approach
+
+in service class
+
+@Injectable({providedIn:'root'})   its like providing in provider array
+
+
+3----  ANGULAR ELEMENTs
+
+allows us to navigate angular component to native web component
+
+
+
+
+4:----Ivy:NEW Renderer
+
