@@ -1,0 +1,108 @@
+1 SYNTAX PARSERS. see image or read yr program grammer is valid or not
+our code====>syntax parser=====>computer instructions
+
+
+2  LEXICAL ENVIRONMENT=== grammer   where to write our code in memory
+
+
+EXECUTION CONTEXT:- a wrapper to help manage the code that is running 
+or section of coding that is running
+
+OBJECTS--- collection of name value pairs.
+
+
+whenever js code it runs inside EXECUTIOn CONTEXT(Global)
+
+it wraps currently executed code in EXECUTION CONTEXT
+
+
+EXECUTIOn CONTEXT(Global)   create 2 thing
+
+1 GLOBAL OBJECT
+2 create special var this    
+above 2 is done by js engine
+
+
+ex
+
+<script>
+
+
+<script>
+
+since we did not provide any code but execution context was created by js engine then we will get
+
+global obj and this
+
+
+just hit this in dev tool and see some result
+
+and window obj  global obj inside browser
+
+if we have 2 window then 2 wondow onj becaisue we have seprate execution context
+
+at global level 
+
+window obj =this 
+
+GLOBAL----not inside a function
+
+var a = "h i sharad"
+
+function b(){
+}
+
+now  in devtool 
+hit window or this
+
+in the last u will see  
+a: "h i sharad"
+b: function b(){}
+
+
+we can write a or window.a
+
+means var or obh which r not sitting inside the any function then they r just window objs property
+
+when js code is executed 
+an execution context is created 
+
+
+
+
+b();
+cl(a);
+var a ="ji";
+
+function b(){
+cl("called b")    because        
+} 
+ 
+
+op/ called b and undefined 
+
+if i remove a 
+
+then error in console like a is not defined 
+
+this is called hoisting
+
+
+
+because above code will be converted into 
+function b(){
+cl("called b")    because        
+}
+
+var a;
+
+b();
+cl(a);  thats why we got undefined
+a ="ji";
+
+ 
+
+
+
+
+
