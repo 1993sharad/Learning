@@ -1,0 +1,280 @@
+Building Objects
+
+using new ,  object litrals, 
+
+
+function person(){
+
+this.firstname = "john";
+this.lastname = "doe"
+}
+
+var john = new Person();
+
+cl(john);  op person {firstname:"john",lastname="Doe"};
+
+NOTE-----%%%%%    here  once js see new operator it will create a empty operator like {}  and then invoke the function and
+                  return the all value in blank obj {}  crated by js,
+                  remember here this keyword is pointing to this blank obj, thats why this.firstname is not going in window obj, 
+                it is comin in blank {  }   obj created by js .   if we simply call the method then firstname and lastname will go in 
+                window obj. because that time it will be pointing to global.
+
+
+
+
+FOR TESTING Purpose
+
+                   
+function person(){
+cl(this);
+this.firstname = "john";
+this.lastname = "doe"
+cl(this);
+}            
+
+var john = new Person();  // now u can see that message in console.
+
+
+IF
+
+function person(){
+
+this.firstname = fname;
+this.lastname = lname;
+return {greeting:"hi sharad"}
+
+} 
+var john = new Person();
+
+cl(john);  /// op//// object{ greeting: "" hi sharad}
+
+
+FUNCTION CONSTRUCTORS:  image 67   example above 
+
+
+
+FUNCTION CONS  AND  PROTOTYPE @@@@@@@@@@@@@@@@@@@
+ 
+NOTE--- EVERY fns in js has a property called prototype  (used only by the new operator)
+see image 68
+
+function person(fname, lname){
+
+this.firstname = "john";
+this.lastname = "doe"
+
+} 
+
+person.prototype.getFullName = function(){
+return this.firstname +"  " + this.lastname;
+}
+
+var john  = new person("shataf","jain");
+cl(john)
+
+when we wrote new keyword then js 	will create an empty  obj
+and will set the prototype of that empty obj to prototype 
+property of function that u called 
+so here  john has a property prototype which is pointing to person's prototype
+so we can calll
+john.getFullName(); 
+
+
+
+
+DanGEROUS  ASIDE  "NEW AND FUNCTION" //#######################
+
+never forget new keyword 
+
+
+
+BUILT IN FUNCTION CONSTRUCTORS@@@@@@@@@@@@@@@@@@@@@
+
+     we have seen function constructor previously 
+
+var a  = new Number(3);//  this is function cons
+
+a
+
+op
+
+Number {[[primitiveValue]]:3}   // fn con  created a obj 
+
+
+
+var str = new String("jain")
+
+pls see the op
+
+NOTE=== means we r creating a obj and giving them primitive
+
+
+
+
+String.prototype.isLengthGreatherThan = function(limit){
+return this.length > limit;
+}
+
+means we have added a method in obj prototype
+of all the Strings
+so if 
+
+cl("john".isLengthGreatherThan(3))//   true
+
+coz we added that method
+
+
+Number.prototype.isPositive = function(){
+return this> 0;
+}
+
+3.isPositive();  error
+
+in previous case it worked
+
+NOTE----  remember  whenever we write
+
+var x = new String("sharad") ,,  it does not mean that x is string
+means x is object having string sharad and other feature
+
+
+so in previous case when we wrote "john".isLengthGreatherThan(3)  in this case 
+js internally convert "john" to String obj
+
+but not a number (3)  to Number object autometicly
+
+
+
+so var x = new Number(3);  then x.isPositive();  op  true
+
+
+
+
+
+DANGEROUS   FUNCTION CONSTRUCTORS; @@@@@@@@@@@@@@@@@@
+
+
+var a  = 3;
+var b =new Number(3)
+a==b
+op  true  because in this case js will look 
+a- 3 is primitive and  b - new Number(3) is object and then 
+tries to convert them in same type thats why op is true
+
+
+if a===b
+
+coz a is primitive  and b is obj created my function constructor
+and ===  sees if both r not equal then return false  
+
+NOTE== ===  case js not even checking its value  they r just checking its type
+
+so var x = Number(10) because we r just calling that fn 
+it is not returning obj coz we did not use new keyword
+
+op 10 
+
+
+DANGEROUS ASIDE ARRAY AND For In 
+
+var arr = ["sgarad","jain"]; // array is slso obj
+internally var arr =  new Array  // pls see syntax for this 
+for(var prop in arr){
+cl(prop+":"+ arr[prop]);
+
+}
+op 
+0: sharad
+1: jain
+
+
+Array.prototype.myCustomerFeature = "cool";
+for(var prop in arr){   because it itrate over prototype also
+cl(prop+":"+ arr[prop]);
+
+}
+
+op 
+0: sharad
+1: jain
+myCustomerFeature:  cool
+
+then use standard for loop
+
+for(var i - 0; i <arr.length;i++){
+cl(prop+":"+ arr[prop]);
+}
+
+
+
+
+
+
+@@@@@@@@@@@@   OBJECT.CREATE AND PURE PROTOTYCAL INHERITANCE
+
+another way to create object
+
+var Person = {
+firstname:"shara",
+lastname:"jain",
+greet:function(){return (this.firstname +this.lastname;)}
+}
+
+var john = Object.create(person);cl(john);
+
+then in the obj u will be having __proto__ obj which will bw having all the data
+so john.__proto__  will return actual obj
+
+NOTE===== Object.create  always create an empty obj
+but its  prototype is pointing to the obj which we pass 
+
+john.firstname = "john"  // it will override the value
+
+
+POLYFILL------code that adds a feature whiuch the engine may lack
+
+if i m using older browser and i want above like this
+
+
+
+SEE image no 70 code
+
+
+ES6 AND CLASSES   new version of js 
+
+see image 71  72   73
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

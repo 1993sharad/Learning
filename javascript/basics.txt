@@ -102,6 +102,27 @@ a ="ji";
 
  
 
+FUNCTON CONTEXT and VARIABLE ENV
+
+VARIABLE ENV---  where they live 
+see image 8 
+
+
+NOTEEEEEEEE---
+
+Except Global Execution Context, Execution Context there is another list 
+called EVENT QUEUE (only for notification of event that might be happening like button clicking )
+see image no 10
+
+so when the browser somewhere outsiede the js engine has an event that inside the javascript engine we want to notify , it gets placed on the queue.
+
+
+NOYE----Event Queue is looked by js only when execution stack is empty (see the image 11)
+in the is image first function b() is finished then a() then Global execution and now the stack is empty then js periodicly see the Event Queue for something to be there
+if it find then it will create Execution context for that event first then run that first then again same process like above (see image 12 and 13 )
+
+
+Browser put things asynchronusly in EVENTQUEUE  and run code like by line 
 
 
 

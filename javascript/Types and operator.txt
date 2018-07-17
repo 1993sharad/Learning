@@ -1,0 +1,102 @@
+ 6 Primitive data Type
+
+UNDEFINED--see image 15
+NULL    image 16 
+BOOLEAN  true/false
+NUMBER image 17
+STRING  ""  '
+SYMBOLE   used in ES6'
+
+
+OPERATORS  are spec type of function
+
+ COERCION  converting one type to another
+
+2+ '2'    op= 22
+
+
+COMPARASION OPERATOR
+
+cl(1<2<3)   true
+but cl(3<2<1)  true  because precedence is left to rigt  
+so 3<2  false<1  internally  0<1  thar is true
+
+Number(false) ===  0   its a method
+Number(null)  - 0
+Number(undefined)  NaN
+
+var a = false;
+
+a==0  true    problem to debug
+
+null==0  false    null<1    true
+
+""==0  true
+""==false   true    
+
+
+
+
+
+Boolean(undefined)      op   false
+Boolean(null)   op false
+Boolean("")    op false
+Boolean(0)    op false
+Boolean(1)    op true
+var a ;  
+note  if always try to convert value in boolean
+if(a){
+}  here a will be fail
+
+
+undefined || 'hello'  op hello
+
+
+DEFAULT VALUES:-----
+
+suppose
+<body>
+<script> src ="one.js"<script>
+<script> src ="two.js"<script>
+<script> src ="app.js"<script>
+
+<body>
+
+and in one.js
+var x = "one";
+  in two.js
+
+var x = "two"
+
+and in app.js
+
+console.log(x) then op is two
+
+because generally js doesnot create seperate EXECUTION CONTEXT FOR all file 
+ what it wil do it will put all the code in one file 
+like stack then execute
+
+in our case second var just replace first var x
+
+
+SOLUTION:::______
+
+check those things using 
+window.x = window.x || "two";  op   /   one
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

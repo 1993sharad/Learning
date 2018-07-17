@@ -1,0 +1,165 @@
+const appRoutes: Routes =[
+{path: '',HOmeCOMPO},  it menas while hitting localhost:4200   it will open home component
+{path: 'user' ,ComponentName}
+]
+
+always add path without the /  here in this file 
+
+import[RouterModule.forRoot(appRoutes)]  now angular knows our routes
+
+
+in html
+
+<router-outlet></router-outlet>
+
+routerlink="/server"
+[routerLink] = "''"  or "['/user','something']"
+
+if we just user user,  i mean widout  /
+
+widout / it will add directly user in currntly existing path path
+
+using "../user"   it means go one level up and add this
+with /   it will appended to the root domain
+
+routerLinkActive="active"
+[routerLinkActiveOptions] = "{exact:true}"
+
+cons(private router: Router, private route: ActivatedRoute){}
+
+nav(){
+
+this.router.navigate(['/servers','secondnameofpath']);
+
+this.router.navigate(['/servers','secondnameofpath'],{relativeTo:this.route});  here it will tell where we are the add will make url according to /  or widout /
+
+}
+
+
+
+PARAMETERS TO ROUTES
+
+
+const appRoutes: Routes =[
+{path: '',HOmeCOMPO},  
+{path: 'user/:id' ,ComponentName}    after :  it is dynamic
+]
+
+
+FETCHING ROUTE PARAMETER
+
+
+cons(private route: ActivatedRoute){}
+
+ngOnit(){
+  let id = this.route.snapshot.params['id'],  here id we have defined in routing
+}
+
+
+this will work if we put id in browser directly like .../user/10
+
+but if we use 
+[routerLink] = ['/user',10]  in thhis case url will be updated like ../user/10
+
+
+but we can not fetch this value using route.snapshot.params['id']
+
+because we was already on that comp and angular dont reinitilize component if we already there so we can not get new value
+
+
+
+then use params  (its observable) and subscribe
+import {Params, ActivatedRoute} from "@angular/router";   
+
+this.route.params
+.subscribe(
+(params: Params)=>{
+this.id = params['id'];
+}
+);
+
+
+NOTEEEEEEE+==============    even if component is destroyed but subscription lives in memory 
+
+
+then 
+
+implements  onDestroy
+import{ Subscription } from 'rxjs/Subscription';
+ paramSubscription: Subscription;
+
+in ngOnit(){
+
+this.paramSubscription = 
+this.route.params
+.subscribe(
+(params: Params)=>{
+this.id = params['id'];
+}
+);
+}
+
+ngOnDestrop(){
+
+this.paramSubscription .unsubscribe();
+
+}
+
+
+
+Passing Query PARAMETERS and FRAGMENTS
+
+{path: 'servers/:id/edit' ,ComponentName}
+
+[routerLink]="['/servers',5,'edit']"
+[queryParams]="{allowEdit:'1'}" we can put more here
+href="#"
+[fragment]="'loading'"
+
+
+this.router.navigate(['/servers',anyId,'edit'],{queryParams:{allowEdit:'1'},fragment:'loading'});
+
+
+RETRievING ALL ABOVE DATA:---
+
+ngOnit(){
+let x = this.route.snapshot.queryParams;
+let y = this.route.snapshot.fragment;
+// here same problem then use Observable
+}
+
+
+this.route.queryParams.subscribe()
+and
+this.route.fragment.subscribe
+
+
+
+
+
+NESTED ROUTINGGGGGGGGGGG+===========
+
+{path: 'servers',ComponentName(x),children:
+[{path:':id/anyname',componentName}]
+} 
+
+and add router-outlet in html file of x component
+
++params['id']
+
+while using subrouting / its optional to pass parent url u just need to paas child url
+this.router.navigate(['edit'],{relativeTo: this.route})
+
+
+
+
+
+
+
+
+
+
+
+
+
+

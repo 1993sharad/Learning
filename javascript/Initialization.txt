@@ -1,0 +1,84 @@
+INITITILIZATION---
+
+var people = [
+{ firstname:"sharad".
+ lastname:"jain",
+address:["",""].
+},
+{},
+greet: function(){}
+
+]
+
+
+TYPEOF INSTANCEOF @@@@@@@@@
+
+var x =10;
+cl(typeof x);  op number
+
+ x = "sharad"
+cl(typeof x);  op string
+
+x= {};
+cl(typeof x);  op object
+
+x=[]; 
+cl(typeof x);  op object    weird
+
+then cl (Object.prototype.toString.call(x))  op//[object Array]
+
+function name(){}
+var x= new name();
+cl(typeof x)  op  object
+
+cl( x instanceof name)  op   true
+
+cl(typeof undefined);  op undefined
+
+cl(typeof null);  op object    bug  in js
+
+var x = function(){}
+cl(typeof x);  op function
+
+
+
+@$$$$$$$#####   STRICT   MODE
+
+
+var person ;
+
+persom = {};
+ cl(persom);  op    Object{}   coz in this case it will create a object persom  in window
+
+
+so use
+
+
+"use strict";
+
+var person ;
+persom = {};
+cl(persom);  op   error
+
+
+we can use strict
+
+1 at top of the file
+2 first line of the  functioin  (coz it creates its own execution context)
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

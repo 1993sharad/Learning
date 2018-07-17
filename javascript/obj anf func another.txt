@@ -1,0 +1,380 @@
+IIFEs   AND SAFE CODE ////////////////
+
+	(function(name){
+var x = 10;
+cl(name)}('sharad'));
+
+now execution stack
+
+Glpobal E C  //  initially nothing in it   see image 30
+
+then when it hit function exp
+then GEC will be having () its is function in memory without name see image 31
+
+once it see ()  invoking the function  then new Execution context will be created for annomus function  see inage 32
+
+then it will run code line by line 
+NOTE----always remember then this variable x will go in EXECUTION CONTEXT not in GLOBAL EC   see image 33 
+
+  
+VVVIIIMMMPPPP
+
+remember earlier when we do like below
+
+<script>
+file1
+file2
+ <script>
+
+now in file 1
+var greetng = "hello";
+
+now in file 2
+
+(function(name){var greeting = "hola";cl(greeting)}("sharad"));
+
+here no problem becaue now 1st greeting variable comes under global and 2nd greeting comes under function  so no problem 
+
+but if we want to access 1st then simply wriye
+
+cl(greeting)//  it will take global greeting value;
+
+
+
+SEE the stack
+
+var greeting = "hello";
+
+(function(name){var greeting = "hola";cl(greeting)}("sharad"));
+
+see image no   34  jaruri
+
+
+NOTE-----IF we want to pas global OBJ to IIFE then 
+
+(function(global,name)
+{cl(global.greeting);    //  obj always passed by ref in js 
+var greeting = "hola";
+cl(greeting)}
+(window,"sharad"));
+
+
+
+
+
+
+CLOSURES//////
+
+fnuction greet(x){
+return functoin(name){
+cl(x+""+name);
+}
+}
+
+greet("hi")("sharad");  correct
+
+var ok = greet("hi");
+
+ok("sharad");  // correct
+
+
+QUESTION is    firstly greet called finshed then it will be stacked poped then why 
+that var x is still available for ok function()
+
+in the initial we have 
+
+Global Execution Context having nothing
+
+when i hit 
+
+var ok = greet("hi");
+then new execution contex created having method greet()  having
+ x variable 
+
+inside function it will create function on the fly and returned it and then this execution context poped out 
+
+js goes to outside lexical env to search variable if it doesont find in its env
+
+NOTE-----   even after poped out of execution context it  will be in memory so we can still access whatever is there var  fns etc
+
+PLS SEE  ALL IMAGE from 35  to 43  for understanding CLOsures 
+
+when js hit
+var ok = greet("hi");
+new ec will be created and when js see  cl(x+""+name);  
+first it will search x in current env if not finds then will go for lexicaloutside env, then there it will find in memory  (NOTE   EC of that variable already poped out)
+
+
+
+
+CLOSURE   PART 2======
+
+
+
+function buildFunctions(){
+var arr = [];
+
+for(var i = 0; i<3;i++)
+{arr.push(function(){cl(i)});}
+
+return arr;
+}
+
+var fs = buildFunctions();
+fs[0]();
+fs[1]();
+fs[2]();
+
+
+op/ 
+3
+3
+3
+
+the value of i and arr when we return  are 3 and [f0,f1,f2]
+see the images  for this from 44  to 48
+
+NOTE// function is a obh which we r adding in array not executing then we r just adding them into array 
+
+when it leave function using return arr that time i was 3 and array was having 3 function 
+
+then its execution context will pe gone but it will be in memory 
+i mean its data
+
+NOw from GEC  we hit the fst function fs[0]()
+then its ec will be created which has no variable i so it goes up the scope change 
+it goes to out reference  which will find i as a 3   :)
+
+same for others  that is the reason op are 3,3,3,
+
+NOTE  here in our case all the 3 functions has same outer env coz all r created in same function 
+
+
+NOTE---- JS ALWAYS check value of particular variables at the time of execution
+
+NOTE___----- if we use let in for loop then op 1 2 3 
+because its block level and each and every time it is created and destroyed but in memory keep remain
+
+
+
+BUT  if WE WANT   IN JS  then use IIFEs
+
+
+
+
+function buildFunctions(){
+var arr = [];
+
+for(var i = 0; i<3;i++)
+{arr.push(
+(function(j){return function(){console.log(j)}}(i))
+);
+}
+
+return arr;
+}
+
+
+
+so here iffe will called everytime so everytime there will different ecand each ec will be having its own j 
+
+so for evey console.log(j)  it will search j in its own env then dosnt find then will go in its parent now it will find that is IIFEs env
+
+
+
+
+
+
+
+
+///////////////  FUNCTION FACTORIES
+
+
+function makeGreeting(lang){
+
+
+return function(fname,lname){
+
+if(lang === 'en'){cl("hello"+fanme +lname)}
+if(lang === 'es'{cl("hola"+fanme +lname)}
+
+}
+
+}
+
+var eng = makeGreeting('en');
+
+var span = makeGreeting('es');
+
+
+eng("sharad","jain")
+
+span("sharad","jain")
+
+PERFORMANCE==== is not good coz we r calling makeGreeting()  twise  so they will be having 2 execution context
+
+see img from 49 to 56
+
+
+
+/////////////CLOSURES AND CALLBACK
+
+
+function sayHi(callback){
+var x = 100;
+callback();
+}
+
+sayHI(function(){alert("hi")});
+
+
+
+
+
+
+
+
+  /////////////   CALL()   APPLY()    BIND()
+
+
+in function execution context 
+
+VARiable env    this        outer env     (3 things)
+
+
+
+in JS  
+
+a function--  is a special kind of obj 
+which may has optional name property , 
+it can be annonumus
+ we have code property that contains the code and that code property is invokable so we can run the code anytime 
+
+NOTE--  all js function also get access to some special functions  (remember fn is just obj so we can have property and method)
+those special method r  call()  apply()   bind()  see image 58 
+
+var person = {
+firstname:"john",
+lastname:"doe",
+getFullName: function(){var fullname = this.firstname+''+this.lastname;
+return fullname;
+}
+}
+
+
+var logNmae =  function(lang1, lang2){
+cl("logged"+this.getFullName());//  error to call getFullName();  coz its under obj
+}
+
+logName();     
+
+
+so solution
+
+var logPersonName = logName.bind(person);
+
+logPersonName ();
+
+
+2nd way 
+
+
+var logNmae =  function(lang1, lang2){
+cl("logged"+this.getFullName());//  error to call getFullName();  coz its under obj
+}.bind(person)   //  means we passed person obj to this method and when ever we use this in this method it will be like person so here
+
+this.getFullName()   or    person.getFullName()   both are same   coz now this is pointing to person 
+
+then simply logName();
+
+
+USING  CALLL()
+
+so here we just need to do 
+
+logName.call(person, argu1,argu2)  //  here we r calling logName by obj person and argu r optional
+
+
+
+USING APPLY 
+
+logName.apply(person,[argu1,argu2]);
+
+
+
+
+
+
+USING IIFE
+
+
+
+
+(function(lang1, lang2){
+cl("logged"+this.getFullName());
+cl(lang1);
+cl(lang2);
+}).apply(person,["en","es"])
+
+
+
+
+FUNCTION BORROWING/////////////////////////////////
+
+
+
+var person2 = {
+firstname:"jain"
+lastname:"sharad"
+}   //   look like above person obj but not having only object 
+
+
+now fn borrowing
+
+cl( person.getFullName.apply(person2));   /
+
+NOTE----in fn getFullName()  we r using this.firstname//   so now this will point to 
+ person2 because we passed person2 obj so this will point not to person2
+
+
+means we used that function in my obj person2
+
+
+//////  FUNCTION CURRYING
+
+function multiply(a,b )
+{
+return a*b;
+}
+
+var multiplyByTwo = multiply.bind(this,2);// here we r fixing a's  value by 2 always 
+
+cl(multiplyByTwo(4));   op///8 
+
+if  var multiplyByTwo = multiply.bind(this,2,2);  // now a and b both r fixed 
+
+and if we write cl(multiplyByTwo(4));  //  now  4 will be extra parameter  and op will be 4 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

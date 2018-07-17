@@ -1,0 +1,127 @@
+OOJS
+
+
+classical inheritance ----   like java c# etc
+prorotype inheritance ----  in js
+
+obj--has   prop
+
+for access
+obj.prop
+
+NOTE-----  all obj and fns in js has a property called  proto(its a obj so it will be having another property)
+lets this obj proto  has a property prop2  
+and if i write obj.prop2  then it wont find in obj directly then it will look into proto
+
+since proto is a obj so it can also has another proto property ...... this goes on   this is called PROTOTYPE CHAIN
+see image no 65
+
+var person = {
+firstname:'sharad',
+lastname:'jain',
+getFullName: function(){return this.firstname+ " "+ this,lastname;}
+}
+
+
+var john = {
+firstname: 'VC',
+lastname: 'GOD'             its for demo purpose only coz of performance issue  now a days we can acccess them by different mechanism
+}
+
+
+john.__proto__ = person;
+cl(john.getFullName()); op///    VC GOD  
+
+because first it will search method so it will not get
+this method from john then it will go to proto there it will find(coz we have assigned its proto above)
+then it will look for firstname and lastname which r available in john itself
+so it wont go in proto
+
+EVERYTHING   iN JS   IS   OBJECT  OR A PRIMITIVE
+
+
+var a = {};
+var b = function(){};
+var c = [];
+
+
+in console
+
+a.__proto__.toString/  op toString(){[native code]}
+see op
+
+b.__proto__   op  function Empty(){}   this is the proto for fn
+
+
+
+c.__proto__  op  []
+
+so whenever we write  
+a,b,c.__proto__.  now once we press . then js will show us methos related to that 
+
+ex  c.__proto__.push(10); 
+  now c[0]   op  10
+
+
+
+because 
+
+because in the lasy it will point to Object  
+
+
+
+REFLECTION  AND EXTEND ///////////#############
+
+
+var person = {
+firstname:'sharad',
+lastname:'jain',
+getFullName: function(){return this.firstname+ " "+ this.lastname;}
+}
+
+
+
+var john = {
+firstname: 'VC',
+lastname: 'GOD'            
+}
+
+
+john.__proto__ = person;
+
+for(var prop in john){
+if(john.hasOwnProperty(prop)){   //  this is for not acces __proto__  else it will access thet parent method  getFullName
+cl(prop +" "+ john[prop]);
+}
+
+}
+
+
+now op 
+
+firstname VC   
+lastname GOD
+
+
+
+
+
+
+var jane = {
+address: "dsfdsf",
+getFormalFullName: function(){return this.lastname+ ' '+this.lastname;}
+}
+
+var jim = {
+getFirstName: function(){return firstname;}
+}
+
+
+_.extend(john,jane,jim); //  this is the feature of inderline library 
+
+cl(john) //    now john will be having all the properties of above 3 objs
+
+
+
+
+

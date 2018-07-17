@@ -1,0 +1,407 @@
+var obj = new Object();
+
+obj["firstname"] = "sharad";
+
+obj["lastname"] = "jain";
+
+var x = "firstname";
+
+cl(obj)
+cl(obj[x])
+
+
+
+OBJECT AND OBJEC LITERALS
+
+
+one way is
+ var  x = new Object();
+
+2nd way
+var x = {};  
+
+FAKING NAMESPACE
+
+var greet = "hello";
+var greet = "Hola";
+op/ Hola
+
+but suppose both r in different file then it is problem coz they will override
+
+theen solution
+
+REMEMBER JAVASCRIPT doesnot have NAMESPACE (container for var or function)
+
+then 
+
+var english = {};
+var spanish = {};
+
+english.greet = "HELLO";
+spanish.greet = "HOLA"
+
+now they wont collide(meANS THIS OBJ WE R USING AS A CONTAINER)
+
+
+
+JSON AND OBJECT LITERALS
+
+
+
+FUNCTIONS ARE OBJECTS
+a fn is a special type of object
+
+fn can not have its name or may have
+
+since fn are obj in js so we can do like below
+
+function greet(){
+cl("hi");
+}
+
+greet.lang = "hindi"
+cl(greet.lang)   op   hindi  
+here we added property in function coz its obj
+
+see the image     vvvimp 25
+
+
+
+FUNCTION STATEMENTS AND FUNCTION EXPRESSIONS
+
+
+
+fn statement
+ 
+greet();
+function greet(){
+cl("hi")
+}
+
+fn as  exp
+
+var greet = function(){
+cl("hello")
+}
+
+greet();
+
+
+
+
+
+but 
+greet();
+
+var greet = function(){
+cl("hello")
+}
+
+error  undefined is not a function coz  think abt hoastion  , initially greet will a var and having a value undefined
+
+Detail
+in fst case coz of hastion greet will be in memory and function not setted to undefined and having seperate execution context so when we say greet() so it will find memory
+but in 2nd case greet will be setted to undefined so when u say greet() it will find undefuned thats why error will come
+
+
+
+SINCE FUNCTION IS A OBJ SO WE CAN PASS IT AS A ARGUMANT LIKE
+
+
+functoin log(a){
+console.log(a);  // here in this case a becomes a reference to function which we passed after calling log(), so op will come complete code of fun 
+a(); //  it will execute the function body one by one 
+}
+
+log(function(){cl("ok");
+});
+
+
+
+
+BY VALUE VS BY REFERENCE
+
+if  var a = 10;
+  var b = a;  then both a and b will be having seperate memory 
+see image no   27
+
+if we write 
+var x = any obj
+abd if var y = x;  or  if we pass x to function 
+
+both x and y wil point same memory address
+see image no  28   this is called by reference
+
+
+NOTE_--------IN jS  ALl primitive by value and all object by reference
+
+
+
+
+OBJECT    FUNCTION   AND THIS
+
+when a function is invocked a new execution context is created and put on execution stack
+
+execution context has 
+variable env   var created in fn 
+outer env   var created outside fn 
+this  
+
+
+
+
+THIS   KEYWORD
+
+cl(this)  always available global execution context and point to window obj
+
+
+
+fun a(){cl(this)}  still it will point to window obj
+a();
+
+var x = function(){cl(this)}
+
+x();  still its window obj
+
+
+
+if
+
+fun a(){
+cl(this)     //  global obj
+this.anyvarname = "hi"
+
+}
+
+a();
+cl(anyvarname)  op   hi
+
+
+
+var obj = {
+name:"sharad",
+log: function(){this.name = "jain"; cl(this);}
+}
+
+obj.log();
+         in this case it will point to obj coz it is sitting inside obj
+}
+
+
+IF
+
+
+var obj = {
+name:"sharad",
+log: function(){this.name = "jain"; cl(this);
+var setname = function(newname){this.name = newname}
+setname("updatd");
+cl(this)
+}
+}
+
+
+obj.log();   but in this case setname  having no effect on this means 
+   in this case this will point to window obj and will create property there
+
+
+NOTE====  internal function's execution context's this point to window obj
+
+ 
+SOLUTION:----  
+
+
+var obj = {
+name:"sharad",
+log: function(){
+var self = this;
+self.name = "jain"; cl(self );
+var setname = function(newname){self .name = newname}
+setname("updatd");
+cl(self )
+}
+}
+
+
+obj.log(); 
+
+
+This point to window or global in a single method
+this point to obj if it under obj's method
+this point to global or window if its inside method which method is already inside a another method.
+
+
+
+
+
+
+
+
+
+
+ARRAYs-----COLLECTION    OF   ANYTHIG
+
+
+
+var arr =  new Array();
+or 
+var arr = [];
+
+
+Arguments AND SPREAD
+
+functoin(fname, lname, lang){
+fname=  fname || "sharad"; ///   if we dont pass anything then fname will be undefined
+cl(fname);
+cl(arguments) // Execution context  will create us //  look like  array(not a array coz it dosnt have all the array feature) which will be  having all passed arguments
+
+if(arguments.length === 0){return;}
+cl(arguments[0])
+
+}
+
+
+
+functoin a(fname, lname, lang, ...other){}
+a("sharad","jian","hindi","up","don")  it means we can pass n no of argu  all will be stord in other
+op  ["up","don"]
+
+
+
+
+FUNCTION OVERLOADING   no concept in js
+\\\
+
+
+
+SYNTAX   PARSER
+
+
+
+
+
+AUTOMATIC  SEMICOLON INSERTION 
+
+
+NOTE====  when we press enter for new line   js add carriage return charactor for new line
+function getPerson(){
+return
+ {firstName:"sharad"}
+}
+cl(getPerson());   op undefined
+
+coz in our case it will be return;
+
+so write
+return {
+firstName:"sharad"
+}  in this case js knew something started that is obj literals
+
+Conclusion==
+1 always put ;
+2 always write "{"
+then next line for loop obj etc etc.
+
+
+
+WHITESPACE=======  see image 29 for defination
+
+invisval char that create litral space n yr written code
+like tabs , spaces
+carriage returns;
+
+
+
+
+
+
+IIFE=====**********
+
+function greet(nane){
+cl(name)
+}
+
+var greet = function(name){cl("hi")}
+
+greet("sharead"); // here we are invoking function
+
+
+
+IIFE  var greet = function(name){cl("hi")}("sharad");
+
+if function returns something then 
+var greet = function(name){return "done";}("sharad");
+cl(greet)
+// means returned value will be in greet   in this case
+
+
+if we try to invoke it like greet("hi")
+error//   string is not a function  coz now in case of iife it became string
+
+
+in js we can write stand alone like 
+3;
+"i m sharad";
+{nme:"sharad"};
+but if write 
+function(name){alert(name)}  //   then error
+
+then solution 
+
+( function(name){alert(name)});//  coz js knew  ()  is operator which takes exp so in our case   inside () ,  it understood function as a expression  which we created on the fly
+  or for calling 
+( function(name){cl(name)})("sharad")  or ( function(name){alert(name)}("sharad"));  ///   both r right way of calling
+
+//IIFE
+
+var fname = "sharad";
+(function(name){alert(name)}(fname));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
