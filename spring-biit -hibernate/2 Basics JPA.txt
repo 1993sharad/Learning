@@ -1,0 +1,72 @@
+in JPA 
+will define a Entity and will map to row of db table 
+
+jpa is interface and hibernate is class(implem of jpa)
+
+
+1:- add starter jpa in pom.xml
+@Entity  from persistence.Entity
+@Table(name="Person")// optional
+public class Person{
+
+@Id   primary key
+@GeneratedValue  
+private int id;
+
+@Column(name="name")  // it means this String name will be mapped to db name(means we can have different name in db then only it is required) 
+private String name;
+private String loc;
+
+public Person(){} //  imp always
+
+public Person(String name, String lo){
+super();
+this.name= name
+this.loc= loc;
+}
+
+}
+
+
+
+we wil use  @Repository  in class where we will talk to db
+   @Transactionl   for service layer  (either update delete insert on db should be successfull or fail)
+ 
+
+@Repository
+@Transactionl  // writing both annotation together cpz in this case we r doing all in one class itself
+
+class PersonRepo{
+
+@PersistenceContext
+EntityManager entityManager;
+
+public Person findById(int id){
+ entityManager.find(Person.class,id)
+}
+
+}
+PersistenceContext
+EntityManager   manages the Entity (all the operation in a specific session)   is a interface to  PersistenceContext
+
+
+For Update or insert same method is there that is merge()
+
+entityManager.merge(person)//   will return Person obj if obj is already there then update otherwise will insert
+
+
+DELETING
+before del need to get that obj then 
+Person p = entityManager.find(Person.class,id)
+entityManager.remove(p) // no return type of this method
+
+FIND ALL OBJ  (for this we need to write jpql  with jpa)
+
+insted writing the  query(jpql) use concept named Query
+
+entityManager.creatTypeQuery<Person> namedQuery = eNamedQuery("find_all_Persons",Person.class) 
+ return namedQuery .getResultList();
+
+now just agter 
+@Entity
+@NamedQuery(name="find_all_Persons", query="select p from Person p)

@@ -1,0 +1,93 @@
+Javascript is singled-threaded but the browser is not.
+ The browser has at least three threads: Javascript engine thread, UI thread, and timing thread,
+ where the timing of setTimeout and setInterval are done by the timing thread.
+ 
+ 
+ When calling setTimeout or setInterval, 
+ a timer thread in the browser starts counting down
+ and when time up puts the callback function in javascript thread's execution stack. 
+ The callback function is not executed before other functions above it in the stack finishes.
+ So if there are other time-consuming functions being executed when time up, the callback of setTimeout will not finish in time.
+ 
+ 
+ 
+ 
+ EVENT DELEGATION
+ 
+ One of the hot methodologies in the JavaScript world is event delegation, and for good reason. 
+ Event delegation allows you to avoid adding event listeners to specific nodes;  instead, the event listener is added to one parent. 
+ That event listener analyzes bubbled events to find a match on child elements. 
+ The base concept is fairly simple but many people don't understand just how event delegation works. 
+ Let me explain the how event delegation works and provide pure JavaScript example of basic event delegation.
+ <ul id="todo-app">
+ 
+ 
+  <li class="item">Walk the dog</li>
+  <li class="item">Pay bills</li>
+  <li class="item">Make dinner</li>
+  <li class="item">Code for one hour</li>
+</ul>
+ 
+ 
+ 
+ document.addEventListener('DOMContentLoaded', function() {
+  
+  let app = document.getElementById('todo-app');
+  
+  // attach event listener to whole container
+  app.addEventListener('click', function(e) {
+    if (e.target && e.target.nodeName === 'LI') {
+      let item = e.target;
+      alert('you clicked on item: ' + item.innerHTML);
+    }
+  });
+  
+});
+
+
+
+
+
+Here are some of the common JavaScript events:
+change:: An HTML element has been changed
+click:: The user clicks an HTML element
+mouseover:: The user moves the mouse over an HTML element
+mouseout:: The user moves the mouse away from an HTML element
+keydown:: The user pushes a keyboard key
+load:: The browser has finished loading the page
+
+
+
+
+
+
+1159
+down vote
+accepted
++50
+Event bubbling and capturing are two ways of event propagation in the HTML DOM API, when an event occurs in an element inside another element, and both elements have registered a handle for that event. The event propagation mode determines in which order the elements receive the event.
+
+With bubbling, the event is first captured and handled by the innermost element and then propagated to outer elements.
+
+With capturing, the event is first captured by the outermost element and propagated to the inner elements.
+
+Capturing is also called "trickling", which helps remember the propagation order:
+
+trickle down, bubble up
+
+
+
+
+Question #3: Debouncing   must implement  in infinite scrolling and remember that spade project cisco problem  like ajax call on every keypress (why on every key press coz still i m typing) 
+
+The Debounce technique allow us to "group" multiple sequential calls in a single one
+
+
+Debounce and throttle are two similar (but different!) techniques to control how many times we allow a function to be executed over time.
+
+There are some browser events that can fire many times within a short timespan very quickly, such as resizing a window or scrolling down a page. If you attach an event listener to the window scroll event for example, and the user continuously scrolls down the page very quickly, your event may fire thousands of times within the span of 3 seconds. This can cause some serious performance issues.
+
+If you’re discussing building an application in an interview, and events like scrolling, window resizing, or key pressing come up, make sure to mention debouncing and/or throttling as a way to improve page speed and performance. A real example taken from this guest post on css-tricks:
+
+In 2011, an issue popped up on the Twitter website: when you were scrolling down your Twitter feed, it became slow and unresponsive. John Resig published a blog post about the problem where it was explained how bad of an idea it is to directly attach expensive functions to the scroll event.
+Debouncing is one way to solve this issue by limiting the time that needs to pass by until a function is called again. A correct implementation of debouncing would therefore group several function calls into one and execute it only once after some time has elapsed. Here’s an implementation in plain JavaScript that makes use of topics such as scope, closures, this, and timing 

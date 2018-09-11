@@ -41,7 +41,7 @@ NOTEeee----
 
 <ng-template [ngIf]="var">
 <div>hi sharad </div>
-</ng-template>
+</ng-template>                          <ng-template> is an Angular element used to render HTML templates. We use <ng-template> with angular *ngIf directive to display else template.
 
 
 safe TRAVERSAL ex 

@@ -1,0 +1,126 @@
+SQL Query applied on Table 
+ JPQL query applie don Entities
+
+jpql query is also internally convertedinto sql by JPA  implementation that is hibernate
+
+
+slect * from Cource
+
+in JPQL
+
+select c from Course
+
+
+Now CREATE Query in JPQL
+
+createQuery("Select c from Course c")
+ now how to execute above query 
+ List rl=em.createQuery("Select c from Course c").getResultList();
+
+
+better approach   TYPED QUERY
+
+TypedQuery<Course> quey = em.createQuery("Select c from Course c",Course.class); ////  "Select c from Course c where name like '$sharad'"
+
+List<Course>  resultList = quey.getResultList():
+
+
+AnnoTation
+
+@Entity           means  this class we will store 
+@Table(name="anyName")   in db table name will be what we provide here
+
+class Course{}
+means Entity map to table name whatever we pass here
+
+
+
+@Entity          
+@Table(name="anyName")   
+class Course{
+@Id
+@GeneratedValue
+private id;
+
+@Column(name="fullname")    or @Column(name="fullname"nullable=false) means name can not be null here 
+private Stirng name
+
+}
+
+
+
+IMP TIMESTAMP
+
+
+
+@Entity          
+@Table(name="anyName")   
+class Course{
+@Id
+@GeneratedValue
+private id;
+
+@Column(name="fullname") 
+private Stirng name
+
+@UpdateTimestamp          its hibernate annotation
+private localDateTime  lastUpdatedDate;
+
+@CreationTimestamp
+private  localDateTime  createDate;
+
+}
+
+sysdate()  gives the current time and date
+
+
+
+NAMED QUERY     
+
+@Entity
+@NamedQuery(name="get_all_courses", query="select c from Cource c")
+public class Course{
+}
+
+now in method
+
+Query query  =  em.createNamedQuery("get_all_courses");
+List resultList = query.getResultList();
+
+
+When We have multiple query for same Entity class then use @NamedQueries  in place of @NamedQuery
+
+
+@NamedQueries( value= {
+@NamedQuery(name="get_all_courses", query="select c from Cource c"),
+@NamedQuery(name="get_all_courses-With_Name", query="select c from Cource c where name like '%sharad'")
+})
+
+
+
+
+NATIVE  QUERY
+
+In the JPQL  we have to write query in their format like  select c from Cource c
+
+but if we want to write in sql style then NATIVE QUERY
+
+
+Query query = em.createNativeQuery("SELECT * from Cource",Course.class)
+List resultList = query.getResultList();
+
+another example 
+Query query = em.createNativeQuery("SELECT * from Cource where id= ?",Course.class)
+query.setParameter(1,1000L);
+List resultList = query.getResultList();
+
+
+
+NAMED  PARAMETERS
+
+Query query = em.createNativeQuery("SELECT * from Cource where id= :id",Course.class)
+query.setParameter("id",1000L);
+List resultList = query.getResultList();
+
+
+

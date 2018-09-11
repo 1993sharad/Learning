@@ -1,0 +1,94 @@
+in 28 minute with jpa and hibernate  google it 
+logging.level.org.springframework = DEBUG            
+
+@ComponentScan   tells spring where to find beans
+
+
+when u want to autoconfig by sb then provide those classes in class path like as naved did for hibernate
+
+JPA  interface for hibernate
+
+
+example
+jdbc jpa and h2 web depedency
+
+
+ SPRIGBOOT  AUTO CONFIG FEATURE:---  when we want to query something on db then create a file 
+data.sql and keep in where the application.properties file is
+
+
+
+@Repository   always talks to db
+
+
+In sb  whenever we want to talk db using springJDBC
+
+1 use autoconfiguration for connection as naved did
+2 now @Autowire   JdbcTemplate jdbcTemplate  (gives us all the method)
+
+
+
+FindALLThe OBJECTS
+  jdbcTemplate.query("selct * from Person",new BeanPropertyRowMapper(Person.class))
+
+
+When we want to run autometic just after when Application Context is ready then in sb
+in main class implenets CommandLineRunner interface and 
+override its run method and write the code which u want to execute
+
+
+QUESTIOn   how jdbcTemplate.query  is connected to db   (AUTO CONFIGURATION)  generally springboot looks classes available in class path and it will auometic configure based on that
+ do 
+logging.level.root=debug
+  now see in  console (AUTO CONFIGUATION REPORT)  
+
+
+
+
+FindByID
+queryForObject(because we r looking for a specific obj)
+
+jdbcTemplate.queryForObject("slect * from Perosn where id = ?",
+new Object[]{anyid},
+new BeanPropertyRowMapper<Person>(Person.class));
+
+
+Delete byID   or insert
+
+jdbcTemplate.update  (for update or delete both)  return type int (coz how many rows deleted or updated)
+jdbcTemplate.update("delete from Person where id =?", new Object[]{id})
+"delete from Person where id =?" or xys=?"
+
+INSERT
+jdbcTemplate.update("insert into Perosn (write all the col name) VALUES(?,?,)",new Object[]{put values here like objName.getId()})
+
+
+UPDATE
+
+jdbcTemplate.update("update Person"+"set name=?, anothercolname=?"+
+ "values(?,?,...)",
+new Object[]{put here new values})
+
+
+RowMapper generally bind the db col name to bean property(both the name shuld be same else error)
+if we have property with different name in bean then 
+
+define yr own row mapper 
+
+class PersonRowMapper implements RowMapper<Person>{
+
+public Person mapRow(ResultSet rs, int rowNum)throws SQLException{
+
+Person person = new Person();
+person.setId(rs.getInt("id"));
+person.setName(rs.getString("name"));
+}
+
+}
+
+
+
+now 
+
+FOR FindALLThe OBJECTS
+  jdbcTemplate.query("selct * from Person",new PersonRowMapper () )
