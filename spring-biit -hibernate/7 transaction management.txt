@@ -1,0 +1,56 @@
+
+ACID
+
+Atomicity- trs should be 100% successfull or 0%(rollback)
+Consistency- let say in bank we r transferirng 100 fro a's account to b's account then in bank overall money should be same as it was earlier  before transaction(if any error or anything happen it should be consistent)
+Isolation-  how changes within a trs is visible to other trs(how much do u want to allow them )
+Durability- if trs is successfull, anyhow data should be persisted or updated in db 
+
+
+
+ISOLATION  DETAIl
+
+
+DIRTY READ--another tr is reading the modified value before a given tr is commited
+
+
+NON REPEATABLE READ--- when i m trying to read same thing in one transaction, getting different value(updated by another transaction)
+see image
+
+
+PHANTHOM READ:----
+at different time i m getting different no of rows
+see image
+
+
+
+ISOLATION
+ where and what we want to lock so that other trs can not use (take care read write operation)
+ coz if only read operation is there then no need to put lock
+
+@Transactional  (we can import it from springframeworj or javax Transaction management system(JPA))
+but the difference is that
+
+ex
+
+in one trx we want to store data in 
+// db1
+//db2
+
+but JPA can manage Trasaction over a single
+// db not on multiple db
+
+
+for multiple DBs  then always use springframework's Transactional
+
+
+$$$$$$2ND IMP THING
+we can provide isolation lever with @Transactional
+
+@Transactional(isolation=)
+
+
+we can put this in application.properties file
+see image
+
+

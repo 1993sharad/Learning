@@ -1,0 +1,276 @@
+Entity   MANY TO ONE
+
+Course 
+id      name
+10001   Englidh
+10002   HINDI
+10003    Urdu
+
+  Review  (one review will be associated with one course)
+
+id       rating 	description           course_id
+50001	  5 		 Great course         10001
+50002	  4		 Wonderful Course     10001
+50003	  5		 Awesome Course	      10003
+
+public class Course{
+
+@Id
+@GeneratedValue
+private Long id;
+
+@Column(nullable=false)
+private String name;
+
+@OneToMany(mappedBy="course")
+private List<Review> reviews = new ArrayList<>();
+
+public List<Review> getReviews(){return this.reviews;}
+
+public void addReview(Review review){
+this.reviews.add(review);
+}
+
+public void removeReview(Review review){
+this.reviews.remove(review);
+}
+
+}
+
+
+class Review{
+
+@Id @GeneartedValue
+private Long id;
+
+private String rating;
+private String description;
+
+@ManyToOne
+private Course course
+
+genearte getter n setter 
+
+}
+
+
+public void store(){
+// here we want to add 2 review to a particular course
+
+// get the course 10003
+Course course2 = findById(10003L);
+
+// Add 2 reviews  to  it
+
+Review review1 = new Review("5","super");
+Review review2 = new Review("5","awsm");
+
+course.addReview(review1); 
+review1.setCourse(course); // coz we have to associate review with course(Review is owning side of the relationship) 
+ 
+course.addReview(review2);
+review2.setCourse(course)
+
+em.persist(review1);
+em.persist(review2);
+
+}
+
+
+FETCHING STreTIGIES   MANY  TO   ONE
+
+FOR FETCHING REVIEW 
+ 
+NOTE-----
+
+one the @OneToMany  side relationshhip  by default its LAZY FETCHING
+
+@transactional
+public void getReviews(){
+
+Course course = em.find(Course.class,10001L);
+sysout(coursr.getReviews());//  this is LAZYloading 
+because it will get reviews after this coursr.getReviews()
+not by this em.findById(10001L);
+}
+
+
+GO TO COURSE.JAVA
+
+and do changes in for EAGER FETCH
+@OneTOMany(mappedBy="course" fetch=FetchType.EAGER)
+private List<Review> reviews = new ArrayList<>();
+
+so if we write Course course = em.findById(10001L);  then also it will fetch reviews (it will apply join on db internally)
+but not in above case
+
+
+
+FOR FETCHING COURSE
+
+NOTE-----
+
+one the @ManyToOne  side relationshhip  by default its EAGER FETCHING
+
+in the Review Class
+
+@ManyToOne  or @ManyTo Many
+
+private Course course;   //  this is always EAGER Fetching 
+
+so 
+
+@Transactional
+public void getCourse(){
+
+Review review = em.find(Review.class,50001L);
+sysout(review.getCourse())
+in this case  line Review review = em.find(Review.class,50001L);   itself will etch course also 
+
+}
+
+
+
+$$$$$$$$$$$$$ MANY  TO MANY
+
+Course  
+
+id      name
+10001   hindi
+10002   english
+10003   urdu
+
+
+Student 
+
+id     name
+20001   sharad
+20002    raja
+20003    ram
+
+her we ccan   have student_id in zcourse table and course_id in Student table
+but this is not good db design then 
+we will  need to join the table
+
+
+@Entity
+class Course{
+
+@Id
+@GeneratedValue
+private Long id;
+
+@column(nullable=false)
+private String name;
+
+@ManyToMany
+private List<Student> students= new ArrayList<>();
+
+}
+
+
+
+
+@Entity
+class Student{
+
+@Id
+@GeneratedValue
+private Long id;
+
+@column(nullable=false)
+private String name;
+
+@ManyToMany
+private List<Course> coursesnew ArrayList<>();
+
+}
+
+generate getter and setter for above
+
+since we r using ManyToMany in both the class so in db there will be 2 more table 
+Course_Student and Student_Course
+
+both the table will have same column which is not good
+then 
+
+we want only one table
+then we need to make one Entity as a owning side of relationship
+
+we can make any one of them
+jsut add
+
+@manyToMany(mappedBy="courses")
+private List<Student> students = new ArrayList<>();
+
+So here Student became owning seide of the relationship
+
+now in db there will be only table
+
+in db ther e  will be a table STUDENT_COURSES
+having STUDENT_ID
+and COURSES_ID
+
+if want to change the name of this table and its field then 
+
+in the owning side of relationship just add
+
+@ManyToMany
+@JoinTable(name="STUDENT_COURSE")
+we can pass here column name on which join will be applied
+ex in student class join column name is   Student_Id
+and inverseJoinColumn name (from Course table)  COURSE_ID
+ 
+  then @JoinTable(name="STUDENT_COURSE"
+                  joinColumns=@JoinColumn(name="student_id"),
+   inverseJoinColumns=@JoinColumn(name="course_id")
+)
+
+
+
+now in db column name will be whatever we give here
+
+
+
+
+
+
+
+
+
+
+
+%%%%%   ManyToMany  (Inserting Data  and Write Join Query)
+
+
+in db table is STUDENT_COURSE
+
+student_id    course_id
+
+@Transactional
+public void getStudent(){
+
+Student student = em.find(Student.class,20001L);
+sop(student);  sop(student.getCourses);
+
+}
+
+
+public void insertStudentAndCourse(){
+
+Student student = new Student("jack");
+Course course = new Course("new JAVA 8 ");
+ em.persist(student);
+em.persist(course);
+student.addCourse(course);
+course.addStudent(student);
+em.persist(student);
+
+}
+
+
+
+
+
+
+

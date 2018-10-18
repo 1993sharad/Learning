@@ -1,0 +1,209 @@
+class Course
+
+id   name
+10001  english
+10002   hindi
+10003   urdu
+
+@Entity
+class Strudent
+{
+public Student(){}
+Public Student(String name){
+this.name = name;
+}
+@Id
+@GeneratedValue
+private Long id;
+
+@Column(nullable=false)
+private String name;
+
+public String getName(){
+return name;}
+
+public void setName(String name){
+this.name = name;
+}
+public Long getId(){
+return id;
+}
+
+}
+
+@Entity
+public class Passport{
+
+@Id
+@GeneratedVakue
+private Long id;
+
+@Column(nullable=false)
+private String number
+
+protected Password(){}
+Protected Passport(String number{this.number = number;}
+ create getter and setter  like above
+
+}
+
+
+
+@Entity
+class Review{
+@Id
+@GeneratedValue
+private Long id;
+
+private String rating;
+
+@Column(nullable=false)  // no need here coz review is optional
+private String description;
+
+create constructor and getter and setter like above
+
+}
+
+
+ONE to ONE Relationship
+
+Student and Passport table (one student can have only one passport)
+
+1 method   in Student table
+
+id    name   passport_id
+
+2001    sharad    40001
+2002    rahul     40002
+
+
+
+2nd method  in Passport table
+
+id     number   student_id
+40001  Edfdf232  2001
+40002   Edfdf454   2001
+
+
+go to Student table and create 
+
+@OneToOne
+private Passport passport;   its reference of Passport class in Student class
+
+Since Student class has reference of Passport class so whenever we want to store Student obj'we have to first give a obj to 
+that passport reference then we can save 
+
+Passport passport = new Passport("Z122323");
+em.persist(passport);//  line no 1
+
+Student student = new Student("Mike");
+student.setPassport(passport)//   this method should be in Student class for setting value
+
+em.persist(student); line no 2
+
+if we dont write line no 1 and execute  line no2 then error transientPropertyValueException
+
+means passport first should be saved in db
+
+means if passport obj is not there in db then how do u create relation between Passport and Student
+
+
+Eager Fetch:--\\
+
+Student student = em.find(Student.class,20001L);
+
+here we got student obj and also got obj of Passport this is called eager featching. (join autometic will be performed)
+so we can do 
+
+stuent.getPassword();///  this will work .
+
+
+ $$$$---LAZY FETCH
+
+if we dont want to fetch that Passport obj then go to Entity of Student class
+
+and @OneToOne(fetch=FetchType.LAZY)
+then u will get ERROR  LAZY initiliazation
+
+then just add @Transactional just before that method
+
+
+
+ $$$$$$$$$-----TRANSACTION   ENTITY MANAGER PERSISTENCE CONTEX
+
+@Transactional
+public void someTest(){
+
+1  read operation  on db  ex   Student student = em.find(Student.class, 122L);
+after above operation Persistence Context will be having  (student)
+
+2  readoperation on db      Passport password = student.getPassport();
+after above operation Persistence Context will be having entity of Student and Password
+
+3  writeoperation  on db   ex p.setNumber("ffdf");
+after above operation Persistence Context will be having  (student and password++) coz we updated password obj
+
+4  write operation on db ex student.setName("jainjain")
+after above operation Persistence Context will be having (student++, password++)
+}
+  then in  above caase either all the step 4 should be successfull or if error at any point
+then all should be roll backed
+
+
+PERSISTENCE CONTEX  is the place where all the entity will be stored on which we r operating upon in a method
+
+PERSISTENCE CONTEX  started at the begining and killed in end of method
+
+
+at the end of method actual query will be fired if everything is successful because we have mentioned @Transactional
+
+if we remove @Transactional  
+then each line will work as a one transaction  and PERSISTENCE CONTEX  will be start and end for each statement
+
+so in above case if we remove @Transactonal
+then line 1 will work but error at line 2 ()  LAZYInitializationException  no session
+
+it means for Passport password = student.getPassport();  there is no session present
+
+coz PersistenceContext is closed
+
+ PersistenceContext  act as 2 thing
+
+1 store different entity
+2 also gives access to DB   ex  in above   student.getPassport();
+
+
+
+IN JPA   WE use EntityManager(interface) to talk to PersistenceContext
+
+HIBERNATE use Session and SessionFactory  no need to worry in JPA
+
+
+
+ONE 2 ONE MAPPING  BIDIRectional
+
+
+go to Passport table add
+
+@oneToOne(fetch=FetchType.LAZY)
+private Student student;  getter n setter
+
+in above case both table will have one extra col means Student table will have passport_id and Passport table will have student_idso
+ for making owning side
+@oneToOne(fetch=FetchType.LAZY,mappedBy="passport")  means Student is owning side
+
+in this case only Student table will have passport_id  
+
+
+@Transactional
+void xxx(){
+Passport passport = em.find(Passport.class,40001L);
+sop(passport.getStudent())//  this is bidirectional
+
+
+
+}
+
+
+
+

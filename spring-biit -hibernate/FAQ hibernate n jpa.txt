@@ -1,0 +1,41 @@
+
+@Transactional
+void store(){
+
+//  create obj here
+em.persist(user1);
+em.persist(user2);
+
+em.flush();  //  line no 1
+
+//// change user1 here
+//// change user2 here
+} 
+
+without line 1
+in this case hibernate will store data in the end if error comes then it will roll backed
+ with line 1 
+ since we r using flush then that that time also hibernate will fire query on DB
+and will store data in db
+
+after that w r updating user then if success then again it will fire query in the end else
+it will roll backed transaction
+means data will be in db before flush();
+
+
+$$$$$$$$   DO WE REally need @Transaction for read operation
+
+ex  Entity are User Comment
+
+List<Comment> read(){
+
+User user = em.find(User.class, 1L);       line 1 
+
+List<Comment> comments = user.getComments(); line 2 
+
+}
+
+if we dont use @Transactional then line 1 will be executed successfully (internalyy EM will open a new transaction and it will kill once this line will be executed)
+and in line 2 we r writing user.getComments();
+so error will come related to transaction not opened or session
+
